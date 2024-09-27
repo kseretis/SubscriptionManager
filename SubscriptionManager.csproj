@@ -7,8 +7,19 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Google.Protobuf" Version="3.28.2" />
+        <PackageReference Include="Grpc.Net.Client" Version="2.66.0" />
+        <PackageReference Include="Grpc.Tools" Version="2.67.0-pre1">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.8"/>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="TheUltimateStrictLibrary" Version="0.0.1-20240926-095017" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Protobuf Include="Protos\individuals.proto" GrpcServices="Client" />
     </ItemGroup>
 
 </Project>
