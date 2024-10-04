@@ -24,6 +24,7 @@ jobs:
       run: dotnet nuget list source
     - name: Set up NuGet for GitHub Packages
       run: |
+        dotnet nuget locals all --clear
         dotnet nuget add source --username kseretis --password "${{ secrets.GITHUB_TOKEN }}" --store-password-in-clear-text --name github "https://nuget.pkg.github.com/kseretis/index.json"
     - name: Restore dependencies
       run: dotnet restore
