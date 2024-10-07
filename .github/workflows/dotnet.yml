@@ -20,6 +20,10 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+    - name: List NuGet Sources
+      run: dotnet nuget list source
+    - name: Clear Cache
+      run: dotnet nuget locals all --clear
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
