@@ -28,7 +28,7 @@ jobs:
       run: dotnet restore
       env:
         DOTNET_RESTORE_SOURCE: https://nuget.pkg.github.com/kseretis/index.json
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.MY_SECRET_TOKEN }}
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
