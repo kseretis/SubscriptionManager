@@ -24,6 +24,11 @@ jobs:
       run: dotnet nuget list source
     - name: Clear Cache
       run: dotnet nuget locals all --clear
+    - name: Restore NuGet packages
+      run: dotnet restore
+      env:
+        DOTNET_RESTORE_SOURCE: https://nuget.pkg.github.com/kseretis/index.json
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
