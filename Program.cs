@@ -1,12 +1,19 @@
-using SubscriptionManager.Individual;
-using SubscriptionManager.Individual.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using SubscriptionManager.Database;
+using SubscriptionManager.Endpoints.Individual;
+using SubscriptionManager.Endpoints.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+var services = builder.Services;
+var configuration = builder.Configuration;
+
+// Set up
+services.AddControllers();
 ConfigureServices();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+ConfigureDatabase();
+services.AddEndpointsApiExplorer();
+services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -17,11 +24,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 // app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGet("/", async context =>
+{
+    context.Response.Redirect("/swagger");
+});
 
 app.Run();
 
@@ -29,7 +41,13 @@ app.Run();
 
 void ConfigureServices()
 {
-    builder.Services.AddSingleton<IIndividualService, IndividualService>();
+    services.AddScoped<IUserRepository, UserService>();
+    services.AddSingleton<IIndividualRepository, IndividualService>();
+}
+
+void ConfigureDatabase()
+{
+    services.AddDbContext<AppDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 }
 
 #endregion

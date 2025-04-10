@@ -1,8 +1,8 @@
 ﻿using TheUltimateStrictLibrary.Models;
 
-namespace SubscriptionManager.Individual.Interfaces;
+namespace SubscriptionManager.Endpoints.Individual;
 
-public interface IIndividualService
+public interface IIndividualRepository
 {
     Task<IEnumerable<Person>> GetIndividuals();
 }
