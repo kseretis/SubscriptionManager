@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SubscriptionManager.Database;
-using SubscriptionManager.Database.Entities;
+using SubscriptionManager.Domain.Entities;
+using SubscriptionManager.Infrastructure.Database;
 
-namespace SubscriptionManager.Endpoints.Users
+namespace SubscriptionManager.Infrastructure.Repositories
 {
-    public class UserService : IUserRepository
+    public class UserRepository
     {
         private readonly AppDbContext _dbContext;
 
-        public UserService(AppDbContext context)
+        public UserRepository(AppDbContext context)
         {
             _dbContext = context;
         }
@@ -28,6 +28,5 @@ namespace SubscriptionManager.Endpoints.Users
             _dbContext.Users.Add(user);
             return await _dbContext.SaveChangesAsync();
         }
-
     }
 }

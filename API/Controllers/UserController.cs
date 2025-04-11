@@ -1,23 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SubscriptionManager.Database.Entities;
+﻿using API.DataTransferObjects;
+using API.Mappers;
+using Microsoft.AspNetCore.Mvc;
+using SubscriptionManager.Application.Interfaces;
 
-namespace SubscriptionManager.Endpoints.Users
+namespace SubscriptionManager.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserRepository _userService;
+        private readonly IUserService _userService;
         private readonly ILogger<UserController> _logger;
 
-        public UserController(IUserRepository userService, ILogger<UserController> logger)
+        public UserController(IUserService userService, ILogger<UserController> logger)
         {
             _userService = userService;
             _logger = logger;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
             try
             {
@@ -32,7 +34,7 @@ namespace SubscriptionManager.Endpoints.Users
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<UserDto>> GetUser(int id)
         {
             try
             {
@@ -47,11 +49,11 @@ namespace SubscriptionManager.Endpoints.Users
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateUser([FromBody] User user)
+        public async Task<ActionResult> CreateUser([FromBody] UserDto userDto)
         {
             try
             {
-                int entriesAffected = await _userService.CreateUser(user);
+                int entriesAffected = await _userService.CreateUser(userDto.ToUser());
                 return Ok($"User created succesfully!\n{entriesAffected} lines effected!");
             }
             catch (Exception ex)

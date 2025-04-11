@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SubscriptionManager.Database.Entities;
+using SubscriptionManager.Domain.Entities;
 
-namespace SubscriptionManager.Database
+namespace SubscriptionManager.Infrastructure.Database
 {
     public class AppDbContext : DbContext
     {

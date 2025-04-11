@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using SubscriptionManager.Database;
-using SubscriptionManager.Endpoints.Individual;
-using SubscriptionManager.Endpoints.Users;
+using SubscriptionManager.Application.Interfaces;
+using SubscriptionManager.Application.Services;
+using SubscriptionManager.Infrastructure.Database;
+using SubscriptionManager.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ var configuration = builder.Configuration;
 
 // Set up
 services.AddControllers();
+ConfigureRepositories();
 ConfigureServices();
 ConfigureDatabase();
 services.AddEndpointsApiExplorer();
@@ -39,10 +41,14 @@ app.Run();
 
 #region Helpers
 
+void ConfigureRepositories()
+{
+    services.AddScoped<UserRepository>();
+}
+
 void ConfigureServices()
 {
-    services.AddScoped<IUserRepository, UserService>();
-    services.AddSingleton<IIndividualRepository, IndividualService>();
+    services.AddScoped<IUserService, UserService>();
 }
 
 void ConfigureDatabase()

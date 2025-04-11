@@ -1,9 +1,8 @@
-﻿
-using SubscriptionManager.Database.Entities;
+﻿using SubscriptionManager.Domain.Entities;
 
-namespace SubscriptionManager.Endpoints.Users
+namespace SubscriptionManager.Application.Interfaces
 {
-    public interface IUserRepository
+    public interface IUserService
     {
         Task<IEnumerable<User>> GetAllUsers();
         Task<User> GetUser(int id);

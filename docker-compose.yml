@@ -1,8 +1,8 @@
-﻿version: "3.8"
-services:
+﻿services:
   db:
     image: postgres
     restart: always
+    container_name: postgres-db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: homeuserpass
