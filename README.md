@@ -1,0 +1,3 @@
+A DDD project for managing subscriptions.
+
+Under construction...
