@@ -28,8 +28,6 @@ jobs:
       run: dotnet nuget locals all --clear
     - name: Restore NuGet packages
       run: dotnet restore
-    - name: Restore dependencies
-      run: dotnet restore
     - name: Build
       run: dotnet build --no-restore --configuration Release
     - name: Test
