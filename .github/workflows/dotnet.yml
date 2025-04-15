@@ -27,7 +27,7 @@ jobs:
     - name: Clear Cache
       run: dotnet nuget locals all --clear
     - name: Restore NuGet packages
-      run: dotnet restore --configfile ./nuget.config
+      run: dotnet restore
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
