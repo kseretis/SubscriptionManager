@@ -1,5 +1,5 @@
-﻿using TheUltimateStrictLibrary.DataTypes;
-
+﻿using System.ComponentModel.DataAnnotations;
+using TheUltimateStrictLibrary.DataTypes;
 namespace Domain.Entities;
 
 public class User

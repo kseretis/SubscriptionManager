@@ -13,8 +13,8 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>().OwnsOne(u => u.Name, name => 
-        { 
-            name.Property(n => n.Value).HasColumnName("Name").IsRequired();
+        {
+            name.Property(n => n.Value).HasColumnName("Name").IsRequired().HasMaxLength(100);
         });
 
         base.OnModelCreating(modelBuilder);
