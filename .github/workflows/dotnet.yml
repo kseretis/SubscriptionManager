@@ -22,7 +22,7 @@ jobs:
         dotnet-version: 8.0.x
     - name: Add GitHub NuGet source
       run: dotnet nuget add source "https://nuget.pkg.github.com/kseretis/index.json" `
-        --name "github"
+        --name "github" `
         --api-key ${{ secrets.GITHUB_TOKEN }}
     - name: List NuGet Sources
       run: dotnet nuget list source
