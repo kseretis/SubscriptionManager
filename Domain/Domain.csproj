@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="TheUltimateStrictLibrary" Version="0.2.0-alpha" />
+  </ItemGroup>
+
 </Project>

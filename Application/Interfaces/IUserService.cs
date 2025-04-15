@@ -1,11 +1,10 @@
-﻿using SubscriptionManager.Domain.Entities;
+﻿using Domain.Entities;
 
-namespace SubscriptionManager.Application.Interfaces
+namespace Application.Interfaces;
+
+public interface IUserService
 {
-    public interface IUserService
-    {
-        Task<IEnumerable<User>> GetAllUsers();
-        Task<User> GetUser(int id);
-        Task<int> CreateUser(User user);
-    }
+    Task<IEnumerable<User>> GetAllUsers();
+    Task<User> GetUser(int id);
+    Task<int> CreateUser(User user);
 }

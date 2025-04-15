@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using SubscriptionManager.Application.Interfaces;
-using SubscriptionManager.Application.Services;
-using SubscriptionManager.Infrastructure.Database;
-using SubscriptionManager.Infrastructure.Repositories;
+using Application.Interfaces;
+using Application.Services;
+using Infrastructure.Database;
+using Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

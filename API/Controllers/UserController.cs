@@ -1,66 +1,68 @@
-﻿using API.DataTransferObjects;
-using API.Mappers;
+﻿using API.Mappers;
 using Microsoft.AspNetCore.Mvc;
-using SubscriptionManager.Application.Interfaces;
+using Application.Interfaces;
+using API.DTOs;
 
-namespace SubscriptionManager.API.Controllers
+namespace API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class UserController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserController : ControllerBase
+    private readonly IUserService _userService;
+    private readonly ILogger<UserController> _logger;
+
+    //TODO
+    // set up proto files and GRPC
+
+    public UserController(IUserService userService, ILogger<UserController> logger)
     {
-        private readonly IUserService _userService;
-        private readonly ILogger<UserController> _logger;
+        _userService = userService;
+        _logger = logger;
+    }
 
-        public UserController(IUserService userService, ILogger<UserController> logger)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+    {
+        try
         {
-            _userService = userService;
-            _logger = logger;
+            var users = await _userService.GetAllUsers();
+            return Ok(users);
         }
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+        catch (Exception ex)
         {
-            try
-            {
-                var users = await _userService.GetAllUsers();
-                return Ok(users);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while getting users.");
-                return StatusCode(500, "Internal server error");
-            }
+            _logger.LogError(ex, "An error occurred while getting users.");
+            return StatusCode(500, "Internal server error");
         }
+    }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserDto>> GetUser(int id)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<UserDto>> GetUser(int id)
+    {
+        try
         {
-            try
-            {
-                var user = await _userService.GetUser(id);
-                return Ok(user);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"User with id {id} not found");
-                return NotFound($"User with id {id} not found");
-            }
+            var user = await _userService.GetUser(id);
+            return Ok(user);
         }
-
-        [HttpPost]
-        public async Task<ActionResult> CreateUser([FromBody] UserDto userDto)
+        catch (Exception ex)
         {
-            try
-            {
-                int entriesAffected = await _userService.CreateUser(userDto.ToUser());
-                return Ok($"User created succesfully!\n{entriesAffected} lines effected!");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"User couldn't be saved");
-                return StatusCode(500, "Something went wrong");
-            }
+            _logger.LogError(ex, $"User with id {id} not found");
+            return NotFound($"User with id {id} not found");
+        }
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> CreateUser([FromBody] UserDto userDto)
+    {
+        try
+        {
+            int entriesAffected = await _userService.CreateUser(userDto.ToUser());
+            return Ok($"User created succesfully!\n{entriesAffected} lines effected!");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"User couldn't be saved");
+            return StatusCode(500, $"Something went wrong\n{ex.Message}");
         }
     }
 }

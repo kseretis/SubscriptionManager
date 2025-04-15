@@ -1,18 +1,24 @@
-﻿using API.DataTransferObjects;
-using SubscriptionManager.Domain.Entities;
+﻿using API.DTOs;
+using Domain.Entities;
 
-namespace API.Mappers
+namespace API.Mappers;
+
+public static class UserMapper
 {
-    public static class UserMapper
+    /// <summary>
+    /// Converts the User DTO to User Entity object.
+    /// 
+    /// It can throw exceptions
+    /// </summary>
+    /// <param name="userDto"></param>
+    /// <returns></returns>
+    public static User ToUser(this UserDto userDto)
     {
-        public static User ToUser(this UserDto userDto)
+        return new User
         {
-            return new User
-            {
-                Id = userDto.Id,
-                Name = userDto.Name,
-                Email = userDto.Email
-            };  
-        }
+            Id = userDto.Id,
+            Name = new (userDto.Name),
+            Email = userDto.Email
+        };  
     }
 }
