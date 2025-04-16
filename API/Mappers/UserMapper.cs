@@ -1,5 +1,5 @@
 ﻿using API.DTOs;
-using Domain.Entities;
+using Domain.Models;
 
 namespace API.Mappers;
 

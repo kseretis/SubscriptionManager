@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Domain.Entities;
+using Domain.Models;
 
 namespace Infrastructure.Database;
 
@@ -12,7 +12,7 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<User>().OwnsOne(u => u.Name, name => 
+        modelBuilder.Entity<User>().OwnsOne(u => u.Name, name =>
         {
             name.Property(n => n.Value).HasColumnName("Name").IsRequired().HasMaxLength(100);
         });

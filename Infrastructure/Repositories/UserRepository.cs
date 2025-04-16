@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Domain.Entities;
+using Domain.Models;
 using Infrastructure.Database;
 
 namespace Infrastructure.Repositories;
