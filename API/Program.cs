@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Application.Interfaces;
 using Application.Services;
-using Infrastructure.Database;
+using Infrastructure.Data;
 using Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -53,7 +53,7 @@ void ConfigureServices()
 
 void ConfigureDatabase()
 {
-    services.AddDbContext<AppDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+    services.AddDbContext<AppDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("PostgresDb")));
 }
 
 #endregion
