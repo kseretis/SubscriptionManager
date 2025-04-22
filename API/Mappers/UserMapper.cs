@@ -17,7 +17,7 @@ public static class UserMapper
         return new User
         {
             Id = userDto.Id,
-            Name = new (userDto.Name),
+            Username = userDto.Username,
             Email = userDto.Email
         };  
     }
