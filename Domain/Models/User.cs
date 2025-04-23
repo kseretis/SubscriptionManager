@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TheUltimateStrictLibrary.DataTypes;
 
 namespace Domain.Models;
 
@@ -12,7 +13,9 @@ public class User
     [Column(TypeName = "varchar(100)")]
     public required string Username { get; set; }
 
-    // TODO replae the string with EMail
-    [Column(TypeName = "varchar(255)")]
-    public required string Email { get; set; }
+    public required EMail Email { get; set; }
+
+    public PhoneNumber? PhoneNumber { get; set; }
+
+    public required DateTimeOffset CreationDate { get; set; }
 }

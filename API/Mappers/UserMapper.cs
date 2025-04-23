@@ -18,7 +18,8 @@ public static class UserMapper
         {
             Id = userDto.Id,
             Username = userDto.Username,
-            Email = userDto.Email
+            Email = new (userDto.Email),
+            CreationDate = DateTimeOffset.Now
         };  
     }
 }
