@@ -19,7 +19,20 @@ public static class UserMapper
             Id = userDto.Id,
             Username = userDto.Username,
             Email = new (userDto.Email),
-            CreationDate = DateTimeOffset.Now
+            PhoneNumber = new (userDto.PhoneNumber),
+            CreationDate = userDto.CreationDate
         };  
+    }
+
+    public static UserDto ToUserDto(this User user)
+    {
+        return new UserDto
+        {
+            Id = user.Id,
+            Username = user.Username,
+            Email = user.Email.Value,
+            PhoneNumber = user.PhoneNumber.Value,
+            CreationDate = user.CreationDate
+        };
     }
 }

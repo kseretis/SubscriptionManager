@@ -28,4 +28,20 @@ public class UserRepository
         _dbContext.Users.Add(user);
         return await _dbContext.SaveChangesAsync();
     }
+
+    public async Task<int> UpdateUser(User user)
+    {
+        _dbContext.Users.Update(user);
+        return await _dbContext.SaveChangesAsync();
+    }
+
+    public async void DeleteUser(int id)
+    {
+        var user = _dbContext.Users.FindAsync(id);
+
+        if (user.IsCompleted) 
+        {
+            _dbContext.Users.Remove(user.Result);
+        }
+    }
 }

@@ -29,4 +29,14 @@ public class UserService : IUserService
     {
         return await _userRepository.CreateUser(user);
     }
+
+    public async Task<int> UpdateUser(User user)
+    {
+        return await _userRepository.UpdateUser(user);
+    }
+
+    public Task<int> DeleteUser(int id)
+    {
+        throw new NotImplementedException();
+    }
 }
