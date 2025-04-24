@@ -1,5 +1,7 @@
 ﻿using API.DTOs;
 using Domain.Models;
+using Infrastructure.Extensions;
+using TheUltimateStrictLibrary.Extensions;
 
 namespace API.Mappers;
 
@@ -14,25 +16,36 @@ public static class UserMapper
     /// <returns></returns>
     public static User ToUser(this UserDto userDto)
     {
-        return new User
+        var user = new User
         {
-            Id = userDto.Id,
             Username = userDto.Username,
-            Email = new (userDto.Email),
-            PhoneNumber = new (userDto.PhoneNumber),
-            CreationDate = userDto.CreationDate
-        };  
+            Email = new(userDto.Email),
+            CreationDate = userDto.CreationDate.ToUniversalDateTimeOffset(),
+        };
+
+        if (!userDto.PhoneNumber.IsBlank())
+        {
+            user.PhoneNumber = new(userDto.PhoneNumber);
+        }
+
+        return user;
     }
 
     public static UserDto ToUserDto(this User user)
     {
-        return new UserDto
+        var userDto = new UserDto
         {
             Id = user.Id,
             Username = user.Username,
             Email = user.Email.Value,
-            PhoneNumber = user.PhoneNumber.Value,
-            CreationDate = user.CreationDate
+            CreationDate = user.CreationDate.ToLocalTimezone(),
         };
-    }
+
+        if (user.PhoneNumber is not null)
+        {
+            userDto.PhoneNumber = new(user.PhoneNumber.Value);
+        }
+
+        return userDto;
+    }  
 }

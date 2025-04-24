@@ -27,7 +27,7 @@ public class UserController : ControllerBase
         try
         {
             var users = await _userService.GetAllUsers();
-            return Ok(users);
+            return Ok(users.Select(u => u.ToUserDto()).ToList());
         }
         catch (Exception ex)
         {
@@ -42,7 +42,7 @@ public class UserController : ControllerBase
         try
         {
             var user = await _userService.GetUser(id);
-            return Ok(user);
+            return Ok(user.ToUserDto());
         }
         catch (Exception ex)
         {
