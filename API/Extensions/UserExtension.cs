@@ -5,7 +5,7 @@ using TheUltimateStrictLibrary.Extensions;
 
 namespace API.Mappers;
 
-public static class UserMapper
+public static class UserExtension
 {
     /// <summary>
     /// Converts the User DTO to User Entity object.
@@ -22,6 +22,11 @@ public static class UserMapper
             Email = new(userDto.Email),
             CreationDate = userDto.CreationDate.ToUniversalDateTimeOffset(),
         };
+
+        if (userDto.Id is not null)
+        {
+            user.Id = userDto.Id.Value;
+        }
 
         if (!userDto.PhoneNumber.IsBlank())
         {

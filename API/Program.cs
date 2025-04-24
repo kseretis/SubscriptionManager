@@ -44,11 +44,13 @@ app.Run();
 void ConfigureRepositories()
 {
     services.AddScoped<UserRepository>();
+    services.AddScoped<ProgramRepository>();
 }
 
 void ConfigureServices()
 {
     services.AddScoped<IUserService, UserService>();
+    services.AddScoped<IProgramService, ProgramService>();
 }
 
 void ConfigureDatabase()

@@ -12,21 +12,20 @@ public class UserRepository
     {
         _dbContext = context;
     }
-
-    public async Task<IEnumerable<User>> GetAllUsers()
-    {
-        return await _dbContext.Users.ToListAsync();
-    }
-
-    public async Task<User> GetUser(int id)
-    {
-        return await _dbContext.Users.FindAsync(id);
-    }
-
     public async Task<int> CreateUser(User user)
     {
         _dbContext.Users.Add(user);
         return await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<User?> GetUser(int id)
+    {
+        return await _dbContext.Users.FindAsync(id);
+    }
+
+    public async Task<IEnumerable<User>> GetUsers()
+    {
+        return await _dbContext.Users.ToListAsync();
     }
 
     public async Task<int> UpdateUser(User user)

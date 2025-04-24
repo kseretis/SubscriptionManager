@@ -21,36 +21,6 @@ public class UserController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
-    {
-        try
-        {
-            var users = await _userService.GetAllUsers();
-            return Ok(users.Select(u => u.ToUserDto()).ToList());
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "An error occurred while getting users.");
-            return StatusCode(500, "Internal server error");
-        }
-    }
-
-    [HttpGet("{id}")]
-    public async Task<ActionResult<UserDto>> GetUser(int id)
-    {
-        try
-        {
-            var user = await _userService.GetUser(id);
-            return Ok(user.ToUserDto());
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, $"User with id {id} not found");
-            return NotFound($"User with id {id} not found");
-        }
-    }
-
     [HttpPost]
     public async Task<ActionResult> CreateUser([FromBody] UserDto userDto)
     {
@@ -63,6 +33,42 @@ public class UserController : ControllerBase
         {
             _logger.LogError(ex, $"User couldn't be saved");
             return StatusCode(500, $"Something went wrong\n{ex.Message}");
+        }
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<UserDto>> GetUser(int id)
+    {
+        try
+        {
+            var user = await _userService.GetUser(id);
+
+            if (user is null)
+            {
+                return NotFound($"User with id {id} not found");
+            }
+
+            return Ok(user.ToUserDto());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Something went wrong");
+            return StatusCode(500, $"Something went wrong\n{ex.Message}");
+        }
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+    {
+        try
+        {
+            var users = await _userService.GetUsers();
+            return Ok(users.Select(u => u.ToUserDto()).ToList());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while getting users.");
+            return StatusCode(500, "Internal server error");
         }
     }
 }

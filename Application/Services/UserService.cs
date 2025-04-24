@@ -15,19 +15,18 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public async Task<IEnumerable<User>> GetAllUsers()
-    {
-        return await _userRepository.GetAllUsers();
-    }
-
-    public async Task<User> GetUser(int id)
-    {
-        return await _userRepository.GetUser(id);
-    }
-
     public async Task<int> CreateUser(User user)
     {
         return await _userRepository.CreateUser(user);
+    }
+
+    public async Task<User?> GetUser(int id)
+    {
+        return await _userRepository.GetUser(id);
+    }
+    public async Task<IEnumerable<User>> GetUsers()
+    {
+        return await _userRepository.GetUsers();
     }
 
     public async Task<int> UpdateUser(User user)
