@@ -14,6 +14,7 @@ services.AddControllers();
 ConfigureRepositories();
 ConfigureServices();
 ConfigureDatabase();
+ConfigureCors();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
@@ -26,7 +27,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
+app.UseCors("AllowFrontend"); // Use the CORS policy
+
+app.UseHttpsRedirection();
 
 // app.UseAuthorization();
 
@@ -40,6 +43,17 @@ app.MapGet("/", async context =>
 app.Run();
 
 #region Helpers
+
+void ConfigureCors()
+{
+    services.AddCors(options =>
+    {
+        options.AddPolicy("AllowFrontend",
+            policy => policy.WithOrigins("http://localhost:4200", "https://localhost:4200") // Angular Frontend
+                            .AllowAnyHeader()
+                            .AllowAnyMethod());
+     });
+}
 
 void ConfigureRepositories()
 {

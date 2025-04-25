@@ -1,7 +1,7 @@
 ﻿using API.DTOs;
+using API.Helpers;
 using API.Mappers;
 using Application.Interfaces;
-using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -20,12 +20,12 @@ public class ProgramController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateProgram([FromBody] ProgramDto programDto)
+    public async Task<ActionResult<ResponseResult>> CreateProgram([FromBody] ProgramDto programDto)
     {
         try
         {
             var entriesAffected = await _programService.CreateProgram(programDto.ToProgram());
-            return Ok($"Program created succesfully!\n{entriesAffected} lines effected!");
+            return Ok(ResponseResultBuilder.Build(StatusCodes.Status200OK, $"Program created succesfully! {entriesAffected} lines effected!"));
         }
         catch (Exception ex)
         {
@@ -34,8 +34,9 @@ public class ProgramController : ControllerBase
         }
     }
 
+
     [HttpGet("{id}")]
-    public async Task<ActionResult<UserDto>> GetProgram(int id)
+    public async Task<ActionResult<ResponseResult>> GetProgram(int id)
     {
         try
         {
@@ -43,25 +44,25 @@ public class ProgramController : ControllerBase
 
             if (program is null)
             {
-                return NotFound($"Program with id {id} not found");
+                return NotFound(ResponseResultBuilder.Build(StatusCodes.Status404NotFound, $"Program with id {id} not found"));
             }
 
-            return Ok(program.ToProgramDto());
+            return Ok(ResponseResultBuilder.Build(StatusCodes.Status200OK, program.ToProgramDto()));
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Something went wrong");
-            return StatusCode(500, $"Something went wrong\n{ex.Message}");
+            return StatusCode(500, ResponseResultBuilder.Build(StatusCodes.Status500InternalServerError, $"Something went wrong\n{ex.Message}"));
         }
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserDto>>> GetPrograms()
+    public async Task<ActionResult<IEnumerable<ResponseResult>>> GetPrograms()
     {
         try
         {
             var programs = await _programService.GetPrograms();
-            return Ok(programs.Select(p => p.ToProgramDto()).ToList());
+            return Ok(ResponseResultBuilder.Build(StatusCodes.Status200OK, programs.Select(p => p.ToProgramDto()).ToList()));
         }
         catch (Exception ex)
         {

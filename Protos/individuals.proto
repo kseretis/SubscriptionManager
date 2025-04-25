@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option csharp_namespace = "IndividualClient";
+
+package individuals;
+
+service Individuals {
+  rpc GetIndividuals (GetAllIndividualsRequest) returns (GetAllIndividualsResponse);
+}
+
+message GetAllIndividualsRequest {
+}
+
+message GetAllIndividualsResponse {
+  
+  message Individual {
+    string id = 1;
+    string first_name = 2;
+    optional string middle_name = 3;
+    string last_name = 4;
+  }
+  
+  repeated Individual individuals = 1; 
+}
