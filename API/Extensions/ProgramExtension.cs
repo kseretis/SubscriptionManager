@@ -1,7 +1,7 @@
 ﻿using API.DTOs;
 using Infrastructure.Extensions;
 
-namespace API.Mappers;
+namespace API.Extensions;
 
 public static class ProgramExtension
 {

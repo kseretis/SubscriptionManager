@@ -1,4 +1,4 @@
-﻿using API.Mappers;
+﻿using API.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Application.Interfaces;
 using API.DTOs;

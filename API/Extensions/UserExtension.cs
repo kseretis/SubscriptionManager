@@ -3,7 +3,7 @@ using Domain.Models;
 using Infrastructure.Extensions;
 using TheUltimateStrictLibrary.Extensions;
 
-namespace API.Mappers;
+namespace API.Extensions;
 
 public static class UserExtension
 {
